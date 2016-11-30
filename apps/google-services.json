@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "753062475092",
+    "firebase_url": "https://holler-demo-de4d5.firebaseio.com",
+    "project_id": "holler-demo-de4d5",
+    "storage_bucket": "holler-demo-de4d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753062475092:android:881b0a9edf04e280",
+        "android_client_info": {
+          "package_name": "com.rainmakerlabs.holler.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753062475092-1vi7gub0n3kn7b42982vfqg9avdu95sc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSEb3DNtPzEMFKm2Pn_TPQVrtV1JRYRZo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

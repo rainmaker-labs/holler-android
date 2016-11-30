@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="handler"
+            type="com.rainmakerlabs.holler.demo.login.LoginHandler"/>
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:apps="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:alpha="0.3"
+                android:scaleType="fitStart"
+                android:src="@drawable/bg_ring_6" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_holler" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:text="@string/login_intro"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:alpha="0.8"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:text="@string/login_tip"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                <com.andreabaccega.widget.FormEditText
+                    android:id="@+id/edit_username"
+                    apps:emptyAllowed="false"
+                    apps:emptyErrorString="@string/error_email_empty"
+                    apps:testErrorString="@string/error_email"
+                    style="@style/AppTheme.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:imeOptions="actionNext"
+                    android:inputType="textWebEmailAddress"
+                    apps:testType="email">
+
+                    <requestFocus />
+                </com.andreabaccega.widget.FormEditText>
+
+                <com.andreabaccega.widget.FormEditText
+                    android:id="@+id/edit_password"
+                    style="@style/AppTheme.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_xxx"
+                    android:hint="@string/password"
+                    android:imeActionLabel="@string/login"
+                    android:imeOptions="actionGo"
+                    android:inputType="textPassword"
+                    apps:emptyAllowed="false"
+                    apps:emptyErrorString="@string/error_password"
+                    apps:testErrorString="@string/error_password"
+                    />
+
+                <View
+                    android:id="@+id/view_place_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/padding_xxx"
+                    android:background="@drawable/btn_pink"
+                    android:text="@string/login"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:onClick="@{(view) -> handler.onLoginClick(view)}"/>
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</layout>
