@@ -1,9 +1,18 @@
 package com.rainmakerlabs.holler.demo.register;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -13,6 +22,9 @@ import com.mukesh.countrypicker.models.Country;
 import com.rainmakerlabs.holler.demo.HollerActivity;
 import com.rainmakerlabs.holler.demo.R;
 import com.rainmakerlabs.holler.demo.UserLocalStorage;
+import com.rainmakerlabs.holler.demo.Utils.GPSServiceListener;
+import com.rainmakerlabs.holler.demo.Utils.GPSTracker;
+import com.rainmakerlabs.holler.demo.Utils.PermissionHelper;
 import com.rainmakerlabs.holler.demo.databinding.RegisterSubscriberActivityBinding;
 import com.rainmakerlabs.holler.demo.model.AbstractModel;
 import com.rainmakerlabs.holler.demo.model.Application;
@@ -31,17 +43,19 @@ import retrofit2.Response;
  * Created by thanhtritran on 30/11/16.
  */
 
-public class RegisterSubscriberActivity extends HollerActivity implements RegisterSubscriberHandler, CountryPickerListener {
+public class RegisterSubscriberActivity extends HollerActivity implements RegisterSubscriberHandler, CountryPickerListener, GPSServiceListener {
 
     private final int REGISTER_CODE = 1;
     private final int UPDATE_CODE = 2;
     private final int GET_ALL_CODE = 3;
+    private final int REQUEST_CODE_REQUEST_LOCATION_PERMISSION =101;
 
     private RegisterSubscriberActivityBinding binding;
 
     private CountryPicker picker;
 
     private Subscriber subscriber;
+    private boolean isBound;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,12 +76,14 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
             country.setDialCode("+65");
         }
 
+
+
         this.subscriber = this.getIntent().getParcelableExtra("subscriber");
 
         if (subscriber == null) {
             this.subscriber = new Subscriber();
-            this.subscriber.setFirstName("Thanh Tri TRAN");
-            this.subscriber.setEmail("tri.tranthanh@rainmaker-labs.com");
+            this.subscriber.setFirstName("Vinh Pham Tien");
+            this.subscriber.setEmail("vinh.phamtien@rainmaker-labs.com");
             this.subscriber.setLocalPhone("903670967");
             this.subscriber.setCountryCode(country.getDialCode());
             this.subscriber.setCountry(country.getCode());
@@ -123,6 +139,11 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
             this.subscriber.setLocalPhone(binding.etPhoneNumber.getText().toString());
             this.subscriber.setGender(binding.groupGender.getCheckedRadioButtonId() == R.id.radio_male ? "male" : "female");
             this.subscriber.setDeviceToken(UserLocalStorage.getDeviceToken(this));
+            Location lastKnowLoction= gpsTracker.getLastLocation();
+            if(lastKnowLoction!=null){
+                subscriber.getInfo().setGpsLatitude(lastKnowLoction.getLatitude());
+                subscriber.getInfo().setGpsLongitude(lastKnowLoction.getLongitude());
+            }
 
             if (this.subscriber.isNew()) {
                 this.makeRequest(mNetwork.registerSubscriber(this.subscriber.toJsonObject()), REGISTER_CODE);
@@ -152,10 +173,11 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
                             this.showToastMessage("This subscriber is existed");
 
 //                            this.makeRequest(mNetwork.subscribers(), GET_ALL_CODE);
-
-                            this.hideLoading();
-                            break;
+                        }else {
+                            this.showToastMessage(String.valueOf(error.getMessage()));
                         }
+                        this.hideLoading();
+                        break;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -179,5 +201,82 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
         }
 
 
+    }
+
+    @Override
+    public void onLocationChange(Location location) {
+        Log.i("onLocationChange", location.getLatitude() + " : " + location.getLongitude());
+        if(location!=null){
+            subscriber.getInfo().setGpsLatitude(location.getLatitude());
+            subscriber.getInfo().setGpsLongitude(location.getLongitude());
+        }
+    }
+
+    private void checkLocationService() {
+        LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+        boolean gpsEnable = false, networkEnable = false;
+
+        try {
+            gpsEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            networkEnable = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!gpsEnable && !networkEnable) {
+
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            this.startActivity(intent);
+
+        } else {
+            Intent intent = new Intent(this, GPSTracker.class);
+
+            this.bindService(intent, myConnection, BIND_AUTO_CREATE);
+            this.getLoading().show();
+
+        }
+    }
+
+    private GPSTracker gpsTracker;
+    public ServiceConnection myConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            if (gpsTracker == null) {
+                gpsTracker = ((GPSTracker.MyBinder) service).getService();
+                gpsTracker.addGPSServiceListener(RegisterSubscriberActivity.this);
+                gpsTracker.startGettingLocation();
+            }
+            isBound = true;
+            RegisterSubscriberActivity.this.hideLoading();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!PermissionHelper.hasLocationPermission(this)){
+            PermissionHelper.requestLocationPermission(this, REQUEST_CODE_REQUEST_LOCATION_PERMISSION);
+        }else{
+            this.checkLocationService();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (isBound) {
+            this.unbindService(myConnection);
+            if (gpsTracker != null) {
+                gpsTracker.removeGPSServiceListener(RegisterSubscriberActivity.this);
+            }
+            isBound = false;
+        }
     }
 }

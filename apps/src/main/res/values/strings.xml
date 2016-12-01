@@ -26,4 +26,8 @@ numbers</string>
     <string name="registration_successful">Registration \n successful. You can \n now start receiving \n communications.</string>
     <string name="registration_successful_line2">Please don\'t forget that you can add
 your friends and colleuges to your demo app subscribers list by asking them to install the demo app and sign up using your demo API key</string>
+
+    <string name="notification_title">Congratulations you\n have just received\n your first push\n notification</string>
+    <string name="notification_body">This is an example of the page that\n can be launched when user click on\n the push notification</string>
+
 </resources>

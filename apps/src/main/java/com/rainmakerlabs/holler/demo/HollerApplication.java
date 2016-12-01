@@ -1,5 +1,10 @@
 package com.rainmakerlabs.holler.demo;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.os.Build;
+
 import com.rainmakerlabs.holler.demo.model.Application;
 import com.rainmakerlabs.networking.ICacheConfig;
 import com.rainmakerlabs.networking.INetworkConfig;
@@ -7,6 +12,7 @@ import com.rainmakerlabs.networking.NetworkApplication;
 import com.rainmakerlabs.networking.NetworkUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Cache;
@@ -82,5 +88,39 @@ public class HollerApplication extends NetworkApplication<HollerService>
     @Override
     public Cache cache() {
         return NetworkUtils.defaultCache(this);
+    }
+
+    /**
+     * Method checks if the app is in background or not
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isAppIsInBackground(Context context) {
+        boolean isInBackground = true;
+        ActivityManager am = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am
+                    .getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    for (String activeProcess : processInfo.pkgList) {
+                        if (activeProcess.equals(context.getPackageName())) {
+                            isInBackground = false;
+                        }
+                    }
+                }
+            }
+        } else {
+            List<ActivityManager.RunningTaskInfo> taskInfo = am
+                    .getRunningTasks(1);
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+                isInBackground = false;
+            }
+        }
+
+        return isInBackground;
     }
 }

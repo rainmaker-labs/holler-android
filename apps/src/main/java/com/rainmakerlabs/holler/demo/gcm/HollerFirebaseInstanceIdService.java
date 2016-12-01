@@ -1,4 +1,4 @@
-package com.rainmakerlabs.holler.demo.fcm;
+package com.rainmakerlabs.holler.demo.gcm;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
