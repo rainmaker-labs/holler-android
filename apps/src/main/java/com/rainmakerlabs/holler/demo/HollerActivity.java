@@ -1,9 +1,13 @@
 package com.rainmakerlabs.holler.demo;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +19,7 @@ import com.rainmakerlabs.core.CoreAppCompatActivity;
 import com.rainmakerlabs.core.ui.IFragmentNavigation;
 import com.rainmakerlabs.core.ui.IMessageHandler;
 import com.rainmakerlabs.holler.demo.dialog.LoadingDialog;
+import com.rainmakerlabs.holler.demo.gcm.HollerFirebaseMessagingService;
 import com.rainmakerlabs.holler.demo.login.LoginActivity;
 import com.rainmakerlabs.holler.demo.model.Application;
 import com.rainmakerlabs.holler.demo.model.Subscriber;
@@ -206,5 +211,23 @@ public class HollerActivity extends AppCompatActivity implements IFragmentNaviga
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
+    BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Intent i = new Intent(HollerActivity.this, NotificationActivity.class);
+            HollerActivity.this.startActivity(i);
+        }
+    };
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(notificationReceiver, new IntentFilter(HollerFirebaseMessagingService.INTENT_NOTIFICATION));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(notificationReceiver);
+    }
 }

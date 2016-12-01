@@ -3,6 +3,8 @@ package com.rainmakerlabs.holler.demo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by thanhtritran on 30/11/16.
  */
@@ -12,6 +14,12 @@ public class SubscriberInfo implements Parcelable {
     private String gender = "male";
 
     private String country;
+
+    @SerializedName("gps_latitude")
+    private double gpsLatitude;
+
+    @SerializedName("gps_longitude")
+    private double gpsLongitude;
 
     public String getGender() {
         return gender;
@@ -27,6 +35,22 @@ public class SubscriberInfo implements Parcelable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getGpsLatitude() {
+        return gpsLatitude;
+    }
+
+    public void setGpsLatitude(double gpsLatitude) {
+        this.gpsLatitude = gpsLatitude;
+    }
+
+    public double getGpsLongitude() {
+        return gpsLongitude;
+    }
+
+    public void setGpsLongitude(double gpsLongitude) {
+        this.gpsLongitude = gpsLongitude;
     }
 
     @Override

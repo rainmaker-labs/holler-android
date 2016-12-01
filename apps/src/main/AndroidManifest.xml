@@ -3,6 +3,13 @@
     package="com.rainmakerlabs.holler.demo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".HollerApplication"
@@ -41,15 +48,23 @@
 
         </activity>
 
+        <activity
+            android:name=".NotificationActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <service android:name=".Utils.GPSTracker" />
+
         <service
-            android:name=".fcm.HollerFirebaseMessagingService">
+            android:name=".gcm.HollerFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".fcm.HollerFirebaseInstanceIdService">
+            android:name=".gcm.HollerFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
