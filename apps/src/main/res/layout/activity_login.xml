@@ -86,6 +86,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_xxx"
                     android:hint="@string/password"
+                    apps:testType="custom"
+                    apps:classType="com.rainmakerlabs.holler.demo.validator.PasswordValidator"
                     android:imeActionLabel="@string/login"
                     android:imeOptions="actionGo"
                     android:inputType="textPassword"

@@ -18,6 +18,8 @@ import com.rainmakerlabs.holler.demo.model.AbstractModel;
 import com.rainmakerlabs.holler.demo.model.Application;
 import com.rainmakerlabs.holler.demo.model.ErrorMessage;
 import com.rainmakerlabs.holler.demo.model.Subscriber;
+import com.rainmakerlabs.holler.demo.validator.PhoneMaxLengthValidator;
+import com.rainmakerlabs.holler.demo.validator.PhoneMinLengthValidator;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,6 +50,9 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
         this.picker = CountryPicker.newInstance(this.getString(R.string.country));
 
         this.binding = DataBindingUtil.setContentView(this, R.layout.register_subscriber_activity);
+
+        this.binding.etPhoneNumber.addValidator(new PhoneMinLengthValidator(this));
+        this.binding.etPhoneNumber.addValidator(new PhoneMaxLengthValidator(this));
 
         Country country = this.picker.getUserCountryInfo(this);
 
@@ -148,7 +153,7 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
 
 //                            this.makeRequest(mNetwork.subscribers(), GET_ALL_CODE);
 
-
+                            this.hideLoading();
                             break;
                         }
                     }

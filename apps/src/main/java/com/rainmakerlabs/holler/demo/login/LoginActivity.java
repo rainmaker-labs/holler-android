@@ -11,6 +11,7 @@ import com.rainmakerlabs.holler.demo.R;
 import com.rainmakerlabs.holler.demo.UserLocalStorage;
 import com.rainmakerlabs.holler.demo.databinding.ActivityLoginBinding;
 import com.rainmakerlabs.holler.demo.model.Application;
+import com.rainmakerlabs.holler.demo.validator.PasswordValidator;
 
 import org.json.JSONObject;
 
@@ -32,7 +33,6 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         this.binding.setHandler(this);
 
-
         int size = this.getResources().getDisplayMetrics().widthPixels;
         int h = this.getResources().getDisplayMetrics().heightPixels;
 
@@ -52,7 +52,7 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
     @Override
     public void onLoginClick(View view) {
         if (this.binding.editUsername.testValidity()
-                || this.binding.editPassword.testValidity()) {
+                && this.binding.editPassword.testValidity()) {
             this.getLoading().show();
             JsonObject body = new JsonObject();
             body.addProperty("email", binding.editUsername.getText().toString());

@@ -8,6 +8,10 @@
     <string name="error_email_empty">Email must not be blank</string>
     <string name="error_password_empty">Password must not be blank</string>
     <string name="error_email">Email address mismatch email standard format</string>
+    <string name="error_cellphone_6">Cellphone number must have at least 6 numbers</string>
+    <string name="error_cellphone_12">Cellphone number must have equals or less than 12
+numbers</string>
+    <string name="error_fullname">Full name must not contain special characters and number</string>
     <string name="error_password">Password must have at least 6 characters</string>
     <string name="error_login">Can\’t login with provided credentials. Please check your email and password</string>
     <string name="subscriber_intro">Register as a subscriber \n to HOLLER Demo App to \n receive push \n notifications</string>
