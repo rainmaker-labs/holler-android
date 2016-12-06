@@ -25,6 +25,18 @@ import okhttp3.Interceptor;
 public class HollerApplication extends NetworkApplication<HollerService>
         implements INetworkConfig, ICacheConfig {
 
+    //dev
+//    private final String BASE_URL = "http://dev-holler.rmlbs.co/api/v2/";
+
+    //staging
+    private final String BASE_URL = "http://stg-holler.rmlbs.co/api/v2/";
+
+    //UAT
+//    private final String BASE_URL = "http://uat-holler.rmlbs.co/api/v2/";
+
+    //live
+//    private final String BASE_URL = "http://appholler.com/api/v2/";
+
 
     private final Map<String, String> headers = new HashMap<String, String>();
 
@@ -40,7 +52,7 @@ public class HollerApplication extends NetworkApplication<HollerService>
 
     @Override
     public String requestBaseUrl() {
-        return "http://stg-holler.rmlbs.co/api/v2/";
+        return BASE_URL;
     }
 
     @Override

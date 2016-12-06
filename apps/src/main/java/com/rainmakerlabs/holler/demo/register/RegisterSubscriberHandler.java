@@ -11,4 +11,6 @@ public interface RegisterSubscriberHandler {
     void onCountryCodeClick(View view);
 
     void onRegisterClick(View view);
+
+    void onDatePickerClick(View view);
 }

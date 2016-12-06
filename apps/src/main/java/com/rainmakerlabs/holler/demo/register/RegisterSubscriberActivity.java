@@ -1,5 +1,6 @@
 package com.rainmakerlabs.holler.demo.register;
 
+import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -12,10 +13,13 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.andreabaccega.widget.FormEditText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.mukesh.countrypicker.interfaces.CountryPickerListener;
 import com.mukesh.countrypicker.models.Country;
@@ -34,7 +38,11 @@ import com.rainmakerlabs.holler.demo.validator.PhoneMaxLengthValidator;
 import com.rainmakerlabs.holler.demo.validator.PhoneMinLengthValidator;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -43,7 +51,7 @@ import retrofit2.Response;
  * Created by thanhtritran on 30/11/16.
  */
 
-public class RegisterSubscriberActivity extends HollerActivity implements RegisterSubscriberHandler, CountryPickerListener, GPSServiceListener {
+public class RegisterSubscriberActivity extends HollerActivity implements RegisterSubscriberHandler, CountryPickerListener, GPSServiceListener, DatePickerDialog.OnDateSetListener {
 
     private final int REGISTER_CODE = 1;
     private final int UPDATE_CODE = 2;
@@ -152,6 +160,14 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
             }
 
         }
+    }
+
+    @Override
+    public void onDatePickerClick(View view) {
+        Calendar today = Calendar.getInstance();
+        DatePickerDialog datePicker = new DatePickerDialog(RegisterSubscriberActivity.this, this, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH));
+        datePicker.getDatePicker().setMaxDate(today.getTimeInMillis());
+        datePicker.show();
     }
 
     @Override
@@ -278,5 +294,21 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
             }
             isBound = false;
         }
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar dob = Calendar.getInstance();
+        dob.set(Calendar.YEAR,year);
+        dob.set(Calendar.MONTH,month);
+        dob.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
+//        String d = ISO8601Utils.format(new Date(dob.getTimeInMillis()),true);
+        //please ignore the document, use this intead....
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String d = sdf.format(new Date(dob.getTimeInMillis()));
+        subscriber.getInfo().setDateOfBirth(d);
+        this.binding.setSubscriber(subscriber);
+
     }
 }

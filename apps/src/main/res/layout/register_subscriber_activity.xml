@@ -145,6 +145,31 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/padding_x"
                     android:paddingTop="@dimen/padding_x"
+                    android:text="@string/birth_day"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:id="@+id/et_dob"
+                    style="@style/AppTheme.EditText.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/birth_day"
+                    android:text="@{subscriber.info.dateOfBirth}"
+                    app:emptyAllowed="false"
+                    app:testErrorString="@string/error_general"
+                    android:onClick="@{(view)->handler.onDatePickerClick(view)}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.5"
+                    android:background="@color/hintColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_x"
+                    android:paddingTop="@dimen/padding_x"
                     android:text="@string/mobile_label"
                     android:textColor="@color/colorPrimaryDark" />
 

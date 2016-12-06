@@ -21,6 +21,9 @@ public class SubscriberInfo implements Parcelable {
     @SerializedName("gps_longitude")
     private double gpsLongitude;
 
+    @SerializedName("date_of_birth")
+    private String dateOfBirth;
+
     public String getGender() {
         return gender;
     }
@@ -53,6 +56,14 @@ public class SubscriberInfo implements Parcelable {
         this.gpsLongitude = gpsLongitude;
     }
 
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -61,6 +72,7 @@ public class SubscriberInfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.gender);
+        dest.writeString(this.dateOfBirth);
     }
 
     public SubscriberInfo() {
@@ -68,6 +80,7 @@ public class SubscriberInfo implements Parcelable {
 
     protected SubscriberInfo(Parcel in) {
         this.gender = in.readString();
+        this.dateOfBirth = in.readString();
     }
 
     public static final Creator<SubscriberInfo> CREATOR = new Creator<SubscriberInfo>() {
