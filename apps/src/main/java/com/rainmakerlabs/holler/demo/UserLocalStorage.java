@@ -48,7 +48,9 @@ public class UserLocalStorage {
     }
 
     public static boolean isLogged(Context context) {
-        return getSettings(context).contains("MasterAccessKey");
+//        return getSettings(context).contains("MasterAccessKey");
+        String key = getAccessKey(context);
+        return !TextUtils.isEmpty(key);
     }
 
     public static void saveDeviceToken(Context context, String token) {
@@ -66,9 +68,9 @@ public class UserLocalStorage {
 
     public static Application getApplication(Context context) {
 
-        if (app != null) {
-            return app;
-        }
+//        if (app != null) {
+//            return app;
+//        }
 
         String json = getSettings(context).getString("Application", null);
         if (TextUtils.isEmpty(json)) {
@@ -76,6 +78,11 @@ public class UserLocalStorage {
         }
 
         return Application.parse(json);
+    }
+
+    public static void clearApp(Context context){
+        app =null;
+        getEditor(context).putString("Application", null).commit();
     }
 
 }

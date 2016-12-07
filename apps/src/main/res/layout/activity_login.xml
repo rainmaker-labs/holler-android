@@ -92,7 +92,7 @@
                     android:imeOptions="actionGo"
                     android:inputType="textPassword"
                     apps:emptyAllowed="false"
-                    apps:emptyErrorString="@string/error_password"
+                    apps:emptyErrorString="@string/error_password_empty"
                     apps:testErrorString="@string/error_password"
                     />
 

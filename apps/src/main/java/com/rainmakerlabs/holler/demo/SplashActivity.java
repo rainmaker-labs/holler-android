@@ -24,16 +24,17 @@ public class SplashActivity extends HollerActivity {
         int size = this.getResources().getDisplayMetrics().widthPixels;
         imageView.getLayoutParams().width = size / 2;
 
-        if (UserLocalStorage.isLogged(this)) {
-            this.makeRequest(mNetwork.applications(), 2);
-        } else {
-            imageView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    openLogin();
-                }
-            }, 2000);
-        }
+        openLogin();
+//        if (UserLocalStorage.isLogged(this)) {
+//            this.makeRequest(mNetwork.applications(), 2);
+//        } else {
+//            imageView.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    openLogin();
+//                }
+//            }, 2000);
+//        }
     }
 
     @Override

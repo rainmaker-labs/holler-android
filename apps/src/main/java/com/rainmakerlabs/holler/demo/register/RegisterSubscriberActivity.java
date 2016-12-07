@@ -34,6 +34,7 @@ import com.rainmakerlabs.holler.demo.model.AbstractModel;
 import com.rainmakerlabs.holler.demo.model.Application;
 import com.rainmakerlabs.holler.demo.model.ErrorMessage;
 import com.rainmakerlabs.holler.demo.model.Subscriber;
+import com.rainmakerlabs.holler.demo.validator.FullNameValidator;
 import com.rainmakerlabs.holler.demo.validator.PhoneMaxLengthValidator;
 import com.rainmakerlabs.holler.demo.validator.PhoneMinLengthValidator;
 
@@ -75,6 +76,7 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
 
         this.binding.etPhoneNumber.addValidator(new PhoneMinLengthValidator(this));
         this.binding.etPhoneNumber.addValidator(new PhoneMaxLengthValidator(this));
+        this.binding.etFullName.addValidator(new FullNameValidator(this));
 
         Country country = this.picker.getUserCountryInfo(this);
 
@@ -90,9 +92,9 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
 
         if (subscriber == null) {
             this.subscriber = new Subscriber();
-            this.subscriber.setFirstName("Vinh Pham Tien");
-            this.subscriber.setEmail("vinh.phamtien@rainmaker-labs.com");
-            this.subscriber.setLocalPhone("903670967");
+//            this.subscriber.setFirstName("Vinh Pham Tien");
+//            this.subscriber.setEmail("vinh.phamtien@rainmaker-labs.com");
+//            this.subscriber.setLocalPhone("903670967");
             this.subscriber.setCountryCode(country.getDialCode());
             this.subscriber.setCountry(country.getCode());
         } else {

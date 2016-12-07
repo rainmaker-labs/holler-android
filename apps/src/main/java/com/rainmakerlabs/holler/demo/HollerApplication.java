@@ -65,6 +65,8 @@ public class HollerApplication extends NetworkApplication<HollerService>
 
         if (UserLocalStorage.isLogged(this)) {
             this.headers.put("Authorization", UserLocalStorage.getAccessKey(this));
+        }else {
+            this.headers.remove("Authorization");
         }
 
         Application app = UserLocalStorage.getApplication(this);

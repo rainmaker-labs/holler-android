@@ -43,14 +43,15 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
         this.binding.btnLogin.getLayoutParams().width = size / 2;
         this.binding.viewPlaceHolder.getLayoutParams().height = size / 8;
 
-        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
-        this.binding.editPassword.setText("Ph0ng*120693");
+//        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
+//        this.binding.editPassword.setText("Ph0ng*120693");
 
     }
 
 
     @Override
     public void onLoginClick(View view) {
+//        UserLocalStorage.saveAccessKey(this,"");
         if (this.binding.editUsername.testValidity()
                 && this.binding.editPassword.testValidity()) {
             this.getLoading().show();
@@ -68,9 +69,8 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
             if (response.code() == 200) {
                 String key = response.body().getAsJsonObject().get("key").getAsString();
                 UserLocalStorage.saveAccessKey(this, key);
-
+                UserLocalStorage.clearApp(LoginActivity.this);
                 this.makeRequest(mNetwork.applications(), 2);
-
             } else {
                 this.showToastMessage(this.getString(R.string.error_login));
             }
@@ -80,8 +80,9 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
                 UserLocalStorage.saveApplication(this, app);
                 this.openRegisterSubscribe(app);
             }
+            this.hideLoading();
         }
 
-        this.hideLoading();
+
     }
 }

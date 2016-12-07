@@ -181,14 +181,12 @@ public class HollerActivity extends AppCompatActivity implements IFragmentNaviga
         Intent intent = new Intent(this, RegisterSubscriberActivity.class);
         intent.putExtra("data", app);
         this.startActivity(intent);
-        this.finish();
     }
 
     @Override
     public void openLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         this.startActivity(intent);
-        this.finish();
     }
 
     @Override

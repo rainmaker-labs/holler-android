@@ -131,6 +131,7 @@
                     android:hint="@string/fullname"
                     android:text="@{subscriber.firstName}"
                     app:emptyAllowed="false"
+                    app:emptyErrorString="@string/error_fullname_empty"
                     app:testErrorString="@string/error_fullname"
                     app:testType="personFullName" />
 
@@ -203,7 +204,9 @@
                         android:hint="@string/phone_number"
                         android:inputType="phone"
                         android:text="@{subscriber.localPhone}"
-                        app:emptyAllowed="false" />
+                        app:emptyAllowed="false"
+                        app:emptyErrorString="@string/error_cellphone_empty"
+                        />
                 </LinearLayout>
 
                 <View
@@ -229,6 +232,7 @@
                     android:inputType="textEmailAddress"
                     android:text="@{subscriber.email}"
                     app:emptyAllowed="false"
+                    app:emptyErrorString="@string/error_email_empty"
                     app:testErrorString="@string/error_email"
                     app:testType="email" />
 

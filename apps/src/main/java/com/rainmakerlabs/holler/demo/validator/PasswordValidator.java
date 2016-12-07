@@ -17,6 +17,6 @@ public class PasswordValidator extends Validator {
 
     @Override
     public boolean isValid(EditText et) {
-        return et.getText().toString().length() > 6;
+        return et.getText().toString().length() >= 6;
     }
 }
