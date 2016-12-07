@@ -73,6 +73,7 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
                 this.makeRequest(mNetwork.applications(), 2);
             } else {
                 this.showToastMessage(this.getString(R.string.error_login));
+                this.hideLoading();
             }
         } else if (requestCode == 2) {
             if (response.code() == 200) {
