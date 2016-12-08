@@ -74,6 +74,9 @@ public class HollerApplication extends NetworkApplication<HollerService>
         if (app != null) {
             this.headers.put("HOLLER-ACCESS-KEY", app.getAccessKeyApi());
             this.headers.put("HOLLER-APP-ID", app.getApplicationId());
+        }else {
+            this.headers.remove("HOLLER-ACCESS-KEY");
+            this.headers.remove("HOLLER-APP-ID");
         }
 
         return this.headers;

@@ -11,9 +11,13 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.andreabaccega.widget.FormEditText;
@@ -34,6 +38,7 @@ import com.rainmakerlabs.holler.demo.model.AbstractModel;
 import com.rainmakerlabs.holler.demo.model.Application;
 import com.rainmakerlabs.holler.demo.model.ErrorMessage;
 import com.rainmakerlabs.holler.demo.model.Subscriber;
+import com.rainmakerlabs.holler.demo.validator.BirthdayValidator;
 import com.rainmakerlabs.holler.demo.validator.FullNameValidator;
 import com.rainmakerlabs.holler.demo.validator.PhoneMaxLengthValidator;
 import com.rainmakerlabs.holler.demo.validator.PhoneMinLengthValidator;
@@ -77,6 +82,8 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
         this.binding.etPhoneNumber.addValidator(new PhoneMinLengthValidator(this));
         this.binding.etPhoneNumber.addValidator(new PhoneMaxLengthValidator(this));
         this.binding.etFullName.addValidator(new FullNameValidator(this));
+
+//        this.binding.etDob.addValidator(new BirthdayValidator(this));
 
         Country country = this.picker.getUserCountryInfo(this);
 
@@ -137,6 +144,7 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
     public void onRegisterClick(View view) {
 
         if (binding.etFullName.testValidity()
+                && binding.etDob.testValidity()
                 && binding.etPhoneNumber.testValidity()
                 && binding.etEmail.testValidity()) {
 
@@ -161,6 +169,8 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
                 this.makeRequest(mNetwork.updateSubscriber(this.subscriber.getId(), this.subscriber.toJsonObject()), UPDATE_CODE);
             }
 
+        }else if(!binding.etDob.testValidity()){
+            Toast.makeText(this,getString(R.string.error_date_of_birth_empty),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -175,9 +185,9 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
     @Override
     public void onResponse(Call<JsonElement> call, Response<JsonElement> response, int requestCode) {
 
-        if (requestCode == REGISTER_CODE) {
+        if (requestCode == REGISTER_CODE || requestCode== UPDATE_CODE ) {
 
-            if (response.code() == 201) {
+            if (response.code() == 201 ||response.code() == 200) {
                 this.subscriber.setId(response.body().getAsJsonObject().get("id").getAsInt());
                 this.openRegisterSuccessful(this.subscriber);
                 this.hideLoading();
@@ -197,8 +207,11 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
                         this.hideLoading();
                         break;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    if(e!=null){
+                        e.printStackTrace();
+                    }
+                    this.hideLoading();
                 }
 
             }
@@ -309,8 +322,17 @@ public class RegisterSubscriberActivity extends HollerActivity implements Regist
         //please ignore the document, use this intead....
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String d = sdf.format(new Date(dob.getTimeInMillis()));
+        if(!TextUtils.isEmpty(binding.etFullName.getText().toString())){
+            this.subscriber.setFirstName(binding.etFullName.getText().toString());
+        }
+
         subscriber.getInfo().setDateOfBirth(d);
         this.binding.setSubscriber(subscriber);
 
+    }
+
+    @Override
+    public void onBackClick(View view) {
+        this.finish();
     }
 }

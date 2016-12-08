@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/default_btn_background"
                     android:clickable="true"
-                    android:onClick="@{()->activity.onBackPressed()}">
+                    android:onClick="@{(view)->handler.onBackClick(view)}">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -149,14 +149,17 @@
                     android:text="@string/birth_day"
                     android:textColor="@color/colorPrimaryDark" />
 
-                <TextView
+                <com.andreabaccega.widget.FormEditText
                     android:id="@+id/et_dob"
                     style="@style/AppTheme.EditText.White"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/birth_day"
                     android:text="@{subscriber.info.dateOfBirth}"
+                    android:focusable="false"
+                    android:inputType="text"
                     app:emptyAllowed="false"
+                    app:emptyErrorString="@string/error_date_of_birth_empty"
                     app:testErrorString="@string/error_general"
                     android:onClick="@{(view)->handler.onDatePickerClick(view)}" />
 

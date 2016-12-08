@@ -12,5 +12,7 @@ public interface RegisterSubscriberHandler {
 
     void onRegisterClick(View view);
 
+    void onBackClick(View view);
+
     void onDatePickerClick(View view);
 }

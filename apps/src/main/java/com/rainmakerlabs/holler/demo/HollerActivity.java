@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -227,5 +228,10 @@ public class HollerActivity extends AppCompatActivity implements IFragmentNaviga
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(notificationReceiver);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.w("TAG", "Locked on HollerActivity");
     }
 }

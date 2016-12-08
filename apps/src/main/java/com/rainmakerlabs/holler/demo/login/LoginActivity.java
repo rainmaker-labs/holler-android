@@ -29,6 +29,7 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
         super.onCreate(savedInstanceState);
 
         UserLocalStorage.saveAccessKey(this, null);
+        UserLocalStorage.clearApp(this);
 
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         this.binding.setHandler(this);
@@ -41,7 +42,7 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
         this.binding.imageLogo.getLayoutParams().height = size / 2;
 
         this.binding.btnLogin.getLayoutParams().width = size / 2;
-        this.binding.viewPlaceHolder.getLayoutParams().height = size / 8;
+        this.binding.viewPlaceHolder.getLayoutParams().height = size / 7;
 
 //        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
 //        this.binding.editPassword.setText("Ph0ng*120693");
@@ -51,7 +52,8 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
 
     @Override
     public void onLoginClick(View view) {
-//        UserLocalStorage.saveAccessKey(this,"");
+        UserLocalStorage.saveAccessKey(this,null);
+        UserLocalStorage.clearApp(this);
         if (this.binding.editUsername.testValidity()
                 && this.binding.editPassword.testValidity()) {
             this.getLoading().show();
