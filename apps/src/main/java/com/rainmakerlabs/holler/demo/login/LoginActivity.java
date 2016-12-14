@@ -44,8 +44,8 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
         this.binding.btnLogin.getLayoutParams().width = size / 2;
         this.binding.viewPlaceHolder.getLayoutParams().height = size / 7;
 
-//        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
-//        this.binding.editPassword.setText("Ph0ng*120693");
+        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
+        this.binding.editPassword.setText("Ph0ng*120693");
 
     }
 

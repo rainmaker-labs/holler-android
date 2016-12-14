@@ -1,1 +1,1 @@
-include ':core-module', ':sample-app', ':apps', ':myapplication'
+include ':core-module', ':apps', ':sdk-demo'

@@ -5,8 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/android_demo_holler.iml" filepath="$PROJECT_DIR$/android_demo_holler.iml" />
       <module fileurl="file://$PROJECT_DIR$/apps/apps.iml" filepath="$PROJECT_DIR$/apps/apps.iml" />
       <module fileurl="file://$PROJECT_DIR$/core-module/core-module.iml" filepath="$PROJECT_DIR$/core-module/core-module.iml" />
-      <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sample-app/sample-app.iml" filepath="$PROJECT_DIR$/sample-app/sample-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sdk-demo/sdk-demo.iml" filepath="$PROJECT_DIR$/sdk-demo/sdk-demo.iml" />
     </modules>
   </component>
 </project>

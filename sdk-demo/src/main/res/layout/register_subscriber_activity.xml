@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="subscriber"
+            type="com.rainmakerlabs.holler.sdk.subscriber.Subscriber"/>
+
+        <variable
+            name="handler"
+            type="sample.sdk.holler.rainmakerlabs.com.hollersdk.register.RegisterSubscriberActivity"/>
+
+    </data>
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".register.RegisterSubscriberActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:navigationIcon="@null"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <LinearLayout
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:onClick="@{(view)->handler.onBackClick(view)}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:paddingBottom="@dimen/padding_xxx"
+                        android:paddingTop="@dimen/padding_xxx"
+                        android:src="@drawable/ic_back" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Back"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                    <ImageView
+                        android:id="@+id/image_logo"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_holler" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:gravity="center"
+                        android:text="@string/subscriber_intro"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:alpha="0.5"
+                        android:gravity="center"
+                        android:text="@string/subscriber_line_2"
+                        android:textColor="@android:color/white" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_x"
+                    android:paddingTop="@dimen/padding_x"
+                    android:text="@string/fullname"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <com.andreabaccega.widget.FormEditText
+                    android:id="@+id/et_full_name"
+                    style="@style/AppTheme.EditText.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fullname"
+                    android:text="@{subscriber.firstName}"
+                    app:emptyAllowed="false"
+                    app:emptyErrorString="@string/error_fullname_empty"
+                    app:testErrorString="@string/error_fullname"
+                    app:testType="personFullName" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.5"
+                    android:background="@color/hintColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_x"
+                    android:paddingTop="@dimen/padding_x"
+                    android:text="@string/birth_day"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <com.andreabaccega.widget.FormEditText
+                    android:id="@+id/et_dob"
+                    style="@style/AppTheme.EditText.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/birth_day"
+                    android:focusable="false"
+                    android:inputType="text"
+                    app:emptyAllowed="false"
+                    app:emptyErrorString="@string/error_date_of_birth_empty"
+                    app:testErrorString="@string/error_general"
+                    android:text="@{subscriber.formattedDateOfBirth}"
+                    android:onClick="@{(view)->handler.onDatePickerClick(view)}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.5"
+                    android:background="@color/hintColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_x"
+                    android:paddingTop="@dimen/padding_x"
+                    android:text="@string/mobile_label"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_country_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="@{(view)->handler.onCountryCodeClick(view)}"
+                        android:padding="@dimen/padding_x"
+                        android:text="+65"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:alpha="0.5"
+                        android:background="@color/hintColor" />
+
+                    <com.andreabaccega.widget.FormEditText
+                        android:id="@+id/et_phone_number"
+                        style="@style/AppTheme.EditText.White"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/phone_number"
+                        android:inputType="phone"
+                        app:emptyAllowed="false"
+                        app:emptyErrorString="@string/error_cellphone_empty"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.5"
+                    android:background="@color/hintColor" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/padding_x"
+                    android:paddingTop="@dimen/padding_x"
+                    android:text="@string/email_address"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <com.andreabaccega.widget.FormEditText
+                    android:id="@+id/et_email"
+                    style="@style/AppTheme.EditText.White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
+                    android:text="@{subscriber.email}"
+                    app:emptyAllowed="false"
+                    app:emptyErrorString="@string/error_email_empty"
+                    app:testErrorString="@string/error_email"
+                    app:testType="email" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:alpha="0.5"
+                    android:background="@color/hintColor" />
+
+                <RadioGroup
+                    android:id="@+id/group_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:checked="@{subscriber.male}"
+                        android:text="Male" />
+
+                    <RadioButton
+                        android:id="@+id/radio_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:checked="@{subscriber.female}"
+                        android:text="Female" />
+                </RadioGroup>
+
+
+                <Button
+                    android:id="@+id/btn_subscribe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_xxx"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/btn_pink"
+                    android:onClick="@{(view)->handler.onRegisterClick(view)}"
+                    android:text="@string/subscribe_to_holler"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

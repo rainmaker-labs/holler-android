@@ -25,6 +25,9 @@ allprojects {
         maven {
             url "http://dl.bintray.com/rainmaker-labs/android"
         }
+        maven {
+            url  "http://dl.bintray.com/rainmaker-labs/holler"
+        }
         maven { url "https://jitpack.io" }
     }
 }
