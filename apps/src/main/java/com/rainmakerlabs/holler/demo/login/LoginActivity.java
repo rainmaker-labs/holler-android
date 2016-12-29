@@ -44,15 +44,15 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
         this.binding.btnLogin.getLayoutParams().width = size / 2;
         this.binding.viewPlaceHolder.getLayoutParams().height = size / 7;
 
-        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
-        this.binding.editPassword.setText("Ph0ng*120693");
+//        this.binding.editUsername.setText("phong.nguyen@rainmaker-labs.com");
+//        this.binding.editPassword.setText("Ph0ng*120693");
 
     }
 
 
     @Override
     public void onLoginClick(View view) {
-        UserLocalStorage.saveAccessKey(this,null);
+        UserLocalStorage.saveAccessKey(this, null);
         UserLocalStorage.clearApp(this);
         if (this.binding.editUsername.testValidity()
                 && this.binding.editPassword.testValidity()) {
@@ -78,11 +78,31 @@ public class LoginActivity extends HollerActivity implements LoginHandler {
                 this.hideLoading();
             }
         } else if (requestCode == 2) {
+
             if (response.code() == 200) {
-                Application app = Application.parseArray(response.body().getAsJsonObject().get("apps")).get(0);
-                UserLocalStorage.saveApplication(this, app);
-                this.openRegisterSubscribe(app);
+
+                try {
+                    JsonObject json = response.body().getAsJsonObject();
+
+                    Application app = null;
+
+                    if (json.has("results")) {
+                        app = Application.parseArray(json.get("results")).get(0);
+                    } else if (json.has("apps")) {
+                        app = Application.parseArray(json.get("apps")).get(0);
+                    }
+
+                    UserLocalStorage.saveApplication(this, app);
+
+                    this.openRegisterSubscribe(app);
+
+                }catch (Exception ex){
+                    this.showToastMessage(ex.getMessage());
+                    ex.printStackTrace();
+                }
+
             }
+
             this.hideLoading();
         }
 
